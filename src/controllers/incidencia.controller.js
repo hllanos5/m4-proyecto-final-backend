@@ -28,7 +28,7 @@ class IncidenciaController {
       const { usuario_id, titulo, descripcion, estado, prioridad } = req.body
       if (!usuario_id || !titulo || !descripcion || !estado || !prioridad) return res.status(400).json({ message: 'Faltan datos' })
 
-      const user = await incidencia.create({
+      const user = await Incidencia.create({
         usuario_id, 
         titulo,
         descripcion,
@@ -56,7 +56,7 @@ class IncidenciaController {
       } = req.body
       
       if (!usuario_id || !titulo || !descripcion || !estado || !prioridad ) return res.status(400).json({ message: 'Datos incompletos' })
-      console.log("Llegue");
+      
       const resultado = await Incidencia.update({
         id: id,
         usuario_id, 
@@ -75,46 +75,39 @@ class IncidenciaController {
       res.status(500).json({ message: error.message })
     }
   }
-  /*
+  
   static async updatePatch (req, res) {
-    //#swagger.tags = ['User']
+    //#swagger.tags = ['Incidencia']
     try {
       const { id } = req.params
       const {
-        nombre,
-        paterno,
-        materno,
-        telefono,
-        username,
-        correo,
-        password,
-        imagen
+        usuario_id, 
+        titulo,
+        descripcion,
+        estado, 
+        prioridad
       } = req.body
 
-      const resultado = await User.update({
+      const resultado = await Incidencia.update({
         id: id,
-        nombre,
-        paterno,
-        materno,
-        telefono,
-        username,
-        correo,
-        password,
-        imagen
+        usuario_id, 
+        titulo,
+        descripcion,
+        estado, 
+        prioridad
       })
 
       if (!resultado) return res.status(400).json({ message: 'No se enviaron datos para la actualización' })
 
       if (resultado.affectedRows === 0) return res.status(400).json({ message: 'No se pudo actualizar el usuario' })
 
-      const user = await User.findById(id)
-      delete user.password
-
-      res.json({ message: 'Usuario actualizado', data: user })
+      const incidencia = await Incidencia.findById(id)
+      
+      res.json({ message: 'Incidencia actualizado', data: incidencia })
     } catch (error) {
       res.status(500).json({ message: error.message })
     }
-  }*/
+  }
 }
 
 export default IncidenciaController

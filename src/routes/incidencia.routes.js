@@ -7,6 +7,6 @@ router.get('/:id', IncidenciaController.getById)
 router.post('/', IncidenciaController.create)
 
 router.put('/:id',  IncidenciaController.updatePut)
-/*router.patch('/:id', IncidenciaController.updatePatch)*/
+router.patch('/:id', IncidenciaController.updatePatch)
 
 export default router

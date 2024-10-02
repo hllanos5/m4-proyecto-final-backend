@@ -1,5 +1,4 @@
 import { pool } from '../config/db.js'
-import bcrypt from 'bcrypt'
 
 class Incidencia {
   static async all () {
@@ -11,16 +10,8 @@ class Incidencia {
 
   static async findById (id) {
     const [user] = await pool.execute(
-      'SELECT id, usuario_id, descripcion, titulo, estado, prioridad, fecha_incidencia, fecha_cierre  FROM incidencia',
+      'SELECT id, usuario_id, descripcion, titulo, estado, prioridad, fecha_incidencia, fecha_cierre  FROM incidencia where id = ?',
       [id]
-    )
-    return user[0]
-  }
-  
-  static async findOne (columna, valor) {
-    const [user] = await pool.execute(
-      `SELECT id, nombre, paterno, materno, telefono, correo, password, imagen  FROM usuario WHERE ${columna} = ?`,
-      [valor]
     )
     return user[0]
   }
