@@ -3,7 +3,7 @@ import { pool } from '../config/db.js'
 class Incidencia {
   static async all () {
     const [users] = await pool.execute(
-      'SELECT id, usuario_id, titulo, descripcion, estado, prioridad, fecha_incidencia, fecha_cierre  FROM incidencia'
+      'SELECT i.id, i.usuario_id, concat_ws(" ",  u.nombre , u.paterno , u.materno ) as nombres, i.titulo, i.descripcion, i.estado, i.prioridad, i.fecha_incidencia, i.fecha_cierre  FROM incidencia i inner join usuario u on (i.usuario_id = u.id)'
     )
     return users
   }
