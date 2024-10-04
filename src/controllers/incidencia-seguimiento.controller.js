@@ -22,12 +22,23 @@ class IncidenciaSeguimientoController {
       res.status(500).json({ message: error.message })
     }
   }
+
+  static async getBySeguimientoId (req, res) {
+    //#swagger.tags = ['IncidenciaSeguimiento']
+    try {
+      const { id } = req.params
+      const resultado = await IncidenciaSeguimiento.findBySeguimientoId(id);
+      res.json(resultado)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  }
   
   static async create (req, res) {
     //#swagger.tags = ['IncidenciaSeguimiento']
     try {
       const { incidencia_id, fecha, estado, comentario, usuario_id } = req.body
-      if (!incidencia_id || !fecha || !estado || !comentario || !usuario_id) return res.status(400).json({ message: 'Faltan datos' })
+      if (!incidencia_id || !comentario || !usuario_id) return res.status(400).json({ message: 'Faltan datos' })
 
       const incidenciaDetalle = await IncidenciaSeguimiento.create({
         incidencia_id, 

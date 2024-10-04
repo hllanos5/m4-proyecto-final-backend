@@ -2,18 +2,34 @@ import { pool } from '../config/db.js'
 
 class IncidenciaSeguimiento {
   static async all () {
-    const [users] = await pool.execute(
+    const [resultado] = await pool.execute(
       'SELECT id, incidencia_id, fecha, estado, comentario, usuario_id FROM incidencia_seguimiento'
     )
-    return users
+    return resultado
   }
 
   static async findById (id) {
-    const [user] = await pool.execute(
+    const [resultado] = await pool.execute(
       'SELECT id, incidencia_id, fecha, estado, comentario, usuario_id FROM incidencia_seguimiento WHERE id = ?',
       [id]
     )
-    return user[0]
+    return resultado[0]
+  }
+
+  static async findBySeguimientoId (id) {
+    const [aIncidencia] = await pool.execute(
+      `SELECT a.id, i.id as incidencia_id, a.fecha, a.estado, a.comentario, i.usuario_id,  
+        concat_ws(' ',  u.nombre , u.paterno , u.materno ) as nombres, u.rol,
+        i.titulo, i.descripcion , i.prioridad 
+        FROM incidencia_seguimiento a 
+        left join incidencia i  
+        on (a.incidencia_id = i.id)
+        left join usuario u 
+        on (u.id = i.usuario_id)
+        WHERE a.incidencia_id = ? ORDER BY a.id desc`,
+      [id]
+    )
+    return aIncidencia
   }
   
 

@@ -4,6 +4,7 @@ import IncidenciaSeguimientoController from '../controllers/incidencia-seguimien
 const router = Router()
 router.get('/', IncidenciaSeguimientoController.index)
 router.get('/:id', IncidenciaSeguimientoController.getById)
+router.get('/incidencia/:id', IncidenciaSeguimientoController.getBySeguimientoId)
 router.post('/', IncidenciaSeguimientoController.create)
 
 router.put('/:id',  IncidenciaSeguimientoController.updatePut)
