@@ -4,7 +4,16 @@ class IncidenciaController {
   static async index (req, res) {
     //#swagger.tags = ['Incidencia']
     try {
-      const incidencias = await Incidencia.all();
+      console.log(req.user);
+      const { rol, id } = req.user;
+      let incidencias = [];
+      if(rol === 'ADMIN'){
+        incidencias = await Incidencia.all();
+      }
+      else{
+        incidencias = await Incidencia.allByUser(id);
+      }
+      
       res.json(incidencias)
     } catch (error) {
       res.status(500).json({ message: error.message })

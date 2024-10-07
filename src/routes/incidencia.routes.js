@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import IncidenciaController from '../controllers/incidencia.controller.js'
+import { validateJWT } from '../middlewares/auth.middleware.js'
 
 const router = Router()
-router.get('/', IncidenciaController.index)
+router.get('/',validateJWT, IncidenciaController.index)
 router.get('/:id', IncidenciaController.getById)
 router.post('/', IncidenciaController.create)
 

@@ -3,7 +3,31 @@ import { pool } from '../config/db.js'
 class Incidencia {
   static async all () {
     const [respuesta] = await pool.execute(
-      'SELECT i.id, i.usuario_id, concat_ws(" ",  u.nombre , u.paterno , u.materno ) as nombres, i.titulo, i.descripcion, i.estado, i.prioridad, i.fecha_incidencia, i.fecha_cierre  FROM incidencia i inner join usuario u on (i.usuario_id = u.id)'
+      `SELECT a.id, i.id as incidencia_id, a.fecha, a.estado, a.comentario, i.usuario_id,  
+      concat_ws(' ',  u.nombre , u.paterno , u.materno ) as nombres, u.rol,
+      i.titulo, i.descripcion , i.prioridad 
+      FROM incidencia_seguimiento a 
+      left join incidencia i  
+      on (a.incidencia_id = i.id)
+      left join usuario u 
+      on (u.id = a.usuario_id)
+      ORDER BY a.id desc`      
+    )
+    return respuesta
+  }
+
+  static async allByUser (idUsuario) {
+    const [respuesta] = await pool.execute(
+      `SELECT a.id, i.id as incidencia_id, a.fecha, a.estado, a.comentario, i.usuario_id,  
+      concat_ws(' ',  u.nombre , u.paterno , u.materno ) as nombres, u.rol,
+      i.titulo, i.descripcion , i.prioridad 
+      FROM incidencia_seguimiento a 
+      left join incidencia i  
+      on (a.incidencia_id = i.id)
+      left join usuario u 
+      on (u.id = a.usuario_id)
+      WHERE i.usuario_id = ?
+      ORDER BY a.id desc`, [idUsuario]   
     )
     return respuesta
   }
