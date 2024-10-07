@@ -25,7 +25,7 @@ class IncidenciaSeguimiento {
         left join incidencia i  
         on (a.incidencia_id = i.id)
         left join usuario u 
-        on (u.id = i.usuario_id)
+        on (u.id = a.usuario_id)
         WHERE a.incidencia_id = ? ORDER BY a.id desc`,
       [id]
     )
