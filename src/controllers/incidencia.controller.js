@@ -10,6 +10,29 @@ class IncidenciaController {
       res.status(500).json({ message: error.message })
     }
   }
+
+  static async reporteEstado (req, res) {
+
+    //#swagger.tags = ['Incidencia']
+    try {
+      
+      const incidencias = await Incidencia.reporteEstado();
+      res.json(incidencias)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  }
+
+  static async reportePrioridad (req, res) {
+    //#swagger.tags = ['Incidencia']
+    try {
+      
+      const incidencias = await Incidencia.reportePrioridad();
+      res.json(incidencias)
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
+  }
   
   static async getById (req, res) {
     //#swagger.tags = ['Incidencia']

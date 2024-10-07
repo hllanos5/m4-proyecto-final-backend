@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 class User {
   static async all () {
     const [users] = await pool.execute(
-      'SELECT id, nombre, paterno, materno, telefono, correo, password, imagen  FROM usuario'
+      'SELECT id, concat_ws(" ",  nombre , paterno , materno ) as nombres, nombre, paterno, materno, telefono, correo, password, imagen  FROM usuario'
     )
     return users
   }

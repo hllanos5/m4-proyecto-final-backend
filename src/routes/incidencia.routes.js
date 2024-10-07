@@ -6,6 +6,9 @@ router.get('/', IncidenciaController.index)
 router.get('/:id', IncidenciaController.getById)
 router.post('/', IncidenciaController.create)
 
+router.get('/reporte-estado', IncidenciaController.reporteEstado)
+router.get('/reporte-prioridad', IncidenciaController.reportePrioridad)
+
 router.put('/:id',  IncidenciaController.updatePut)
 router.patch('/:id', IncidenciaController.updatePatch)
 
